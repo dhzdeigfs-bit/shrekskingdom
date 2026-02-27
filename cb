@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shrek's Kingdom 🧅</title>
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --swamp-dark: #1a2e0d;
+      --swamp-mid: #2d5016;
+      --swamp: #4a7c28;
+      --slime: #7cb518;
+      --mud: #8b6914;
+      --onion: #c8a84b;
+      --cream: #f5f0dc;
+      --mist: rgba(180, 210, 120, 0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--swamp-dark);
+      color: var(--cream);
+      font-family: 'Lora', Georgia, serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 80%, rgba(74,124,40,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(45,80,22,0.4) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a7c28' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Floating bubbles */
+    .bubble {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(124,181,24,0.3), rgba(74,124,40,0.1));
+      border: 1px solid rgba(124,181,24,0.2);
+      animation: float linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(110vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .crown {
+      font-size: 3rem;
+      animation: sway 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    h1 {
+      font-family: 'Uncial Antiqua', serif;
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      color: var(--slime);
+      text-shadow:
+        0 0 20px rgba(124,181,24,0.6),
+        0 0 60px rgba(124,181,24,0.3),
+        3px 3px 0 var(--swamp-dark);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin: 0.5rem 0;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: var(--onion);
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--swamp), transparent);
+    }
+    .divider-onion { font-size: 1.5rem; }
+
+    /* Main content */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* Shrek image card */
+    .shrek-card {
+      background: linear-gradient(145deg, rgba(45,80,22,0.6), rgba(26,46,13,0.8));
+      border: 2px solid rgba(124,181,24,0.3);
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(124,181,24,0.2),
+        0 0 40px rgba(74,124,40,0.15);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shrek-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(124,181,24,0.02) 40px,
+        rgba(124,181,24,0.02) 41px
+      );
+      pointer-events: none;
+    }
+
+    .shrek-img {
+      max-width: 100%;
+      width: 420px;
+      height: auto;
+      border-radius: 2px;
+      border: 3px solid rgba(124,181,24,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      display: block;
+      margin: 0 auto;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .shrek-img:hover {
+      transform: scale(1.02) rotate(0.5deg);
+      box-shadow: 0 15px 50px rgba(124,181,24,0.3), 0 8px 30px rgba(0,0,0,0.6);
+    }
+
+    .img-caption {
+      margin-top: 1rem;
+      font-style: italic;
+      color: var(--onion);
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+
+    /* Scroll text panels */
+    .scroll-panel {
+      background: linear-gradient(160deg, rgba(45,80,22,0.4), rgba(26,46,13,0.6));
+      border-left: 3px solid var(--slime);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 4px 4px 0;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+    .scroll-panel:hover { transform: translateX(4px); }
+
+    .scroll-panel h2 {
+      font-family: 'Uncial Antiqua', serif;
+      color: var(--slime);
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 15px rgba(124,181,24,0.4);
+    }
+
+    .scroll-panel p {
+      line-height: 1.85;
+      color: var(--cream);
+      opacity: 0.9;
+    }
+
+    .scroll-panel .highlight {
+      color: var(--onion);
+      font-style: italic;
+    }
+
+    /* Quote block */
+    .royal-quote {
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+    }
+    .royal-quote::before,
+    .royal-quote::after {
+      content: '❧';
+      color: var(--swamp);
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .royal-quote blockquote {
+      font-family: 'Uncial Antiqua', serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--slime);
+      line-height: 1.5;
+      text-shadow: 0 0 25px rgba(124,181,24,0.3);
+    }
+    .royal-quote cite {
+      display: block;
+      margin-top: 1rem;
+      color: var(--onion);
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(124,181,24,0.15);
+      color: var(--swamp);
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--slime); }
+
+    /* Entrance animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header { animation: fadeUp 0.8s ease both; }
+    .shrek-card { animation: fadeUp 0.8s 0.2s ease both; }
+    .scroll-panel:nth-child(1) { animation: fadeUp 0.8s 0.35s ease both; }
+    .scroll-panel:nth-child(2) { animation: fadeUp 0.8s 0.5s ease both; }
+    .scroll-panel:nth-child(3) { animation: fadeUp 0.8s 0.65s ease both; }
+    .royal-quote { animation: fadeUp 0.8s 0.8s ease both; }
+  </style>
+</head>
+<body>
+
+  <!-- Swamp bubbles -->
+  <script>
+    for (let i = 0; i < 12; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = Math.random() * 60 + 10;
+      b.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}vw;
+        animation-duration:${Math.random()*15+10}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      document.body.appendChild(b);
+    }
+  </script>
+
+  <header>
+    <div class="crown">👑</div>
+    <h1>Shrek's Kingdom</h1>
+    <p class="subtitle">Das einzig wahre Sumpf-Imperium</p>
+  </header>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-onion">🧅</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <main>
+    <div class="shrek-card">
+      <img
+        class="shrek-img"
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/1/14/Shrek.jpg/220px-Shrek.jpg"
+        alt="Shrek – Der König des Sumpfes"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Simple_smiley.svg/240px-Simple_smiley.svg.png'; this.alt='Shrek ist leider im Sumpf verschwunden 🧅';"
+      />
+      <p class="img-caption">S.M. König Shrek I. — Herrscher aller Sümpfe, Retter der Prinzessin, Verteidiger der Zwiebel</p>
+    </div>
+
+    <div class="scroll-panel">
+      <h2>📜 Über den Großen Grünen</h2>
+      <p>
+        Shrek ist kein gewöhnlicher Oger. Während andere Helden blitzende Rüstungen und weiße Pferde bevorzugen,
+        regiert er sein Reich mit einer <span class="highlight">selbstgebauten Hütte, einem Schild aus Schlamm</span>
+        und der unerschütterlichen Überzeugung, dass Zwiebeln — genau wie Oger — viele Schichten haben.
+        Philosophisch. Tiefgründig. Leicht grünlich.
+      </p>
+    </div>
+
+    <div class="scroll-panel">
+      <h2>🌿 Die Weisheiten des Sumpfes</h2>
+      <p>
+        Shrek hat uns gelehrt: Wahre Schönheit liegt nicht im Auge des Betrachters, sondern
+        <span class="highlight">im nächsten Moorbad</span>. Er bewies, dass man ein Prinzessin retten,
+        einen sprechenden Esel als besten Freund gewinnen und gleichzeitig
+        den besten Sumpfkohl der Sieben Königreiche anbauen kann. Multitasking auf höchstem Niveau.
+      </p>
+    </div>
+
+    <div class="scroll-panel">
+      <h2>🧅 Das Zwiebel-Prinzip</h2>
+      <p>
+        „Oger sind wie Zwiebeln" — dieser Satz veränderte die westliche Philosophie.
+        Nicht weil er besonders tief ist, sondern weil <span class="highlight">Esel danach von Parfums anfing zu reden</span>.
+        Shreks Geduld angesichts dieser Ablenkung bleibt eines der größten Mysterien des Sumpfes.
+      </p>
+    </div>
+
+    <div class="royal-quote">
+      <blockquote>
+        „Besser allein im Sumpf als mit Narren in der Burg."
+      </blockquote>
+      <cite>— Shrek, König der Sümpfe, ca. irgendwann</cite>
+    </div>
+  </main>
+
+  <footer>
+    <p>🌿 Errichtet zu Ehren von <span>S.M. Shrek I.</span> — Möge sein Sumpf ewig stinken 🌿</p>
+  </footer>
+
+</body>
+</html>
